@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/faker/dist/faker.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/20c5629a29.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="static/style.css" />
+  <title>Product List</title>
+</head>
+<body>
+  <!-- Navigation Bar (you can reuse the same navigation bar as the dashboard) -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" id="head-sec">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="https://res.cloudinary.com/dwl5sroux/image/upload/v1697005696/1000123371-removebg-preview_wexlma.png" class="food-munch-logo" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link" href="#" id="navItem2">Profile</a>
+                <a class="nav-link" href="#" id="navItem3">Cart</a>
+                <a class="nav-link" href="#" id="navItem4">My Orders</a>
+                <a class="nav-link active" id="navItem1" href="#wcuSection">
+                    Why Choose Us?
+                    <span class="sr-only">(current)</span>
+                </a>
+                <a class="nav-link" href="#exploreMenuSection" id="navItem2">Explore Menu</a>
+                <a class="nav-link" href="#deliveryPaymentSection" id="navItem3">Delivery & Payment</a>
+                <a class="nav-link" href="#followUsSection" id="navItem4">Follow Us</a>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <div class="d-flex flex-row justify-content-center ">
+        <div class="col-12 col-md-7">
+            <div class="recipe-container">
+                <form id="searchForm" pt-5>
+                    <label for="ingredientsInput">Enter Product Name:</label>
+                    <input type="text" id="ingredientsInput" placeholder="E.g., mobiles, clothes, footwear.." style="width:65px">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+
+                <div class="filters">
+                    <label for="categoryFilter">Filter by Category & Price:</label>
+                    <select id="categoryFilter" name="category_filter">
+                        <option value="">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Cloths">Cloths</option>
+                        <option value="Footwear">Footwear</option>
+                        <option value="Home Appliance">Home Appliance</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Medicine">Medicine</option>
+                        <option value="DairyProducts">DairyProducts</option>
+                    </select>
+                
+                    <label for="minPrice">Min Price:</label>
+                    <input type="number" id="minPrice" name="minPrice" placeholder="Min Price">
+                
+                    <label for="maxPrice">Max Price:</label>
+                    <input type="number" id="maxPrice" name="maxPrice" placeholder="Max Price">
+                
+                    <label for="minRating">Min Rating:</label>
+                    <input type="number" id="minRating" name="minRating" placeholder="Min Rating">
+                
+                    <label for="maxRating">Max Rating:</label>
+                    <input type="number" id="maxRating" name="maxRating" placeholder="Max Rating">
+                </div>                           
+
+                <div id="searchResultsContainer"></div>
+            </div>
+            <div id="modalOverlay" class="modal-overlay">
+                <div id="modalContent" class="modal-content">
+                    <h3 id="modalTitle">Choose your favourite Products...</h3>
+                    <div id="modalBody"></div>
+                    <button id="closeButton">Close</button>
+                </div>
+            </div>
+        </div>
+  </div>
+  
+  <!-- Product List -->
+  <div class="product-list" id="productList">
+    <!-- Product list will be populated dynamically using JavaScript -->
+  </div>
+
+  <div class="explore-menu-section pt-5 pb-5 bg-main" id="exploreMenuSection">
+    <div class="container" id="exploreMenuSection">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="menu-section-heading">Product Items</h1>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://th.bing.com/th/id/OIP.mpJL-GTdvXg1KRPwZkxTWQHaEw?rs=1&pid=ImgDetMain" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Groceries</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="shadow menu-item-card p-3 mb-3">
+                    <img src="https://th.bing.com/th/id/OIP.L5rwsl-VwMrW0whFm0KqfwHaHa?w=800&h=800&rs=1&pid=ImgDetMain" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Trolley & School Bags</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://th.bing.com/th/id/R.f6c2e42e2a44504e2ec3b166bcf3fbc4?rik=0WNS5SOfZKSUIA&riu=http%3a%2f%2ftcistudio.co.uk%2fwp-content%2fuploads%2f2014%2f01%2fEcco-Biom-shoes-tcistudio.jpg&ehk=WviHA2d9yFJPkCIcVjyhQLjDN%2fcVqKYBSf%2b2XLJLVhE%3d&risl=&pid=ImgRaw&r=0" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Footwear</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="shadow menu-item-card p-3 mb-3">
+                    <img src="https://globalmarketingprofessor.com/wp-content/uploads/2021/03/apple.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Apple</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="shadow menu-item-card p-3 mb-3">
+                    <img src="https://th.bing.com/th/id/OIP.lqZ1sR_3iweqYh8bQ2sP_AHaHa?w=800&h=800&rs=1&pid=ImgDetMain" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Sandals</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://megablogme.com/wp-content/uploads/2022/08/boAt-Wave-call-Smartwatch-1024x710-1.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Smart Wearables</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="shadow menu-item-card p-3 mb-3">
+                    <img src="https://www.bhphotovideo.com/images/images1000x1000/sony_dscrx10_b_cyber_shot_dsc_rx10_digital_camera_1009156.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Sony</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://img.audiofanzine.com/images/u/product/normal/jbl-eon-206p-233640.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">JBL</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://i1.wp.com/www.oxgadgets.com/wp-content/uploads/2020/05/Screenshot-2020-05-12-at-5.56.25-PM.png?resize=533%2C461&" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Haier</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://wallpaperaccess.com/full/2489629.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Clothes</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/91z7OWx8apL.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">LG</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://th.bing.com/th/id/R.8e6cf047e386140db6dcf1224c03d1c9?rik=4m0DV4glT%2f%2b6uA&riu=http%3a%2f%2fww1.prweb.com%2fprfiles%2f2014%2f09%2f11%2f12163870%2fPharma+Packaging+Solutions+Products.png&ehk=xy%2bSbAB00QlVGXG8Kb60%2btERFpqAkjIkZ5sQAC5ESzs%3d&risl=1&pid=ImgRaw&r=0" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Health Care</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://na.rdcpix.com/1072695293/97fb563c3b688f67dd947d8fd6b1457cw-c0xd-w826_h860_q80.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Home Tools</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://images.philips.com/is/image/philipsconsumer/b493be86ca6b45a48eabad1500485c01?$jpglarge$&" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Philips</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6450/6450561_sd.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Samsung</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://1.bp.blogspot.com/-Plgh-_qTugI/ToA6RCeycwI/AAAAAAAABD0/25wrhcUx7fI/s1600/untitled.bmp" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Jewellery</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://c4.wallpaperflare.com/wallpaper/622/427/699/interior-style-design-home-wallpaper-preview.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Furniture</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://th.bing.com/th/id/OIP.6CqcWM4Duf3A9iU1Xwqm5QHaFS?rs=1&pid=ImgDetMain" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">cycles</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.CrvYYneSwJvo9AzKYjCR0QHaD3&pid=Api&P=0&h=220" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Whirlpool</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="menu-item-card shadow p-3 mb-3">
+                    <img src="https://cubeduel.com/wp-content/uploads/2021/07/All-the-Types-of-Perfume-1.jpg" class="menu-item-image w-100" />
+                    <h1 class="menu-card-title">Perfumes and Cosmotics</h1>
+                    <a href="" class="menu-item-link">
+                        View All
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="#d0b200" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src="static\script.js"></script>
+</body>
+</html>
